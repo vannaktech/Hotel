@@ -1,0 +1,152 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('reservationdetails', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedInteger('reservationid');
+            $table->unsignedInteger('roomid');
+            $table->string('note', 500);
+            $table->timestamps();
+
+            $table->foreign('reservationid')->references('id')->on('reservations');
+            $table->foreign('roomid')->references('id')->on('rooms');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('reservationdetails');
+    }
+};
+
+
+
+
+
+++++++++++++++++++++++++++++++++++
+
+
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('reservations', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedInteger('customerid');
+            $table->date('checkindate');
+            $table->integer('scheckin');
+            $table->integer('numberofdays');
+            $table->integer('numberofadults');
+            $table->integer('numberofchildrens');
+            $table->string('memo', 500);
+            $table->date('checkoutdate');
+            $table->integer('ischeckout');
+            $table->timestamps();
+
+            $table->foreign('customerid')->references('id')->on('customers');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('reservations');
+    }
+};
+
+
+
+
+++++++++++++++++++++++++++
+
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('appuserpermissions', function (Blueprint $table) {
+            $table->increments('appuserpermissionid');
+            $table->unsignedInteger('appuserid');
+            $table->string('userpermission', 50);
+            $table->timestamps();
+
+            $table->foreign('appuserid')->references('appuserid')->on('appusers');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('appuserpermissions');
+    }
+};
+
+
++++++++++++++++++++++++++++++++++++++
+
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('appusers', function (Blueprint $table) {
+            $table->increments('appuserid');
+            $table->string('username', 50);
+            $table->string('password', 50);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('appusers');
+    }
+};
